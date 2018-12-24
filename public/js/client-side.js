@@ -6,6 +6,7 @@ $("document").ready(() => {
         url: "/articles",
         success: (response) => {
             console.log(`scrape was successful: ${JSON.stringify(response)}`);
+            location.reload();
         },
         error: (err) => {
             console.log(JSON.stringify(err));
@@ -72,5 +73,7 @@ $("document").ready(() => {
       }
     });
   });
+
+
 
 });

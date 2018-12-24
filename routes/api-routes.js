@@ -39,7 +39,14 @@ module.exports = (app) => {
                         .children("picture")
                         .children("img")
                         .attr("src");
-                    db.Article.create({
+                    db.Article.find({title: title})
+                        .then((articleResult) => {
+                            console.log(articleResult);
+                        })
+                        .catch((err) => {
+                            handleError(err);
+                        });
+                    /*db.Article.create({
                         title: title,
                         link: link,
                         summary: summary,
@@ -48,7 +55,7 @@ module.exports = (app) => {
                         console.log(`Article successfully scraped with following data: ${JSON.stringify(articleData)}`);
                     }).catch((err) => {
                         return handleError(err);
-                    });
+                    });*/
                 });
                 res.json({success: "Articles successfully scraped."});
             })

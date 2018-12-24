@@ -1,0 +1,26 @@
+<div>
+    <img alt="main layout image" src="/images/chris-barbalis-223158-unsplash.jpg"/>
+    <button id="btnScrape" type="button">Let's Scrape</button>
+</div>
+<nav>
+    <ul>
+        <a href="/">
+            <li>Home</li>
+        </a>
+        <a href="/scrape">
+            <li>Scrape</li>
+        </a>
+        <a href="/saved-articles">
+            <li>Saved Articles</li>
+        </a>
+    </ul>
+</nav>
+<main id="scrapedArticles">
+    {{#each articles}}
+        <a href={{link}}><div class="card">
+            <img src={{link}}/>
+            <h3>{{title}}</h3>
+            <p>{{summary}}</p>
+        </div></a>
+    {{/each}}
+</main>

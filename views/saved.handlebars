@@ -1,0 +1,30 @@
+<nav>
+    <ul>
+        <a href="/">
+            <li>Home</li>
+        </a>
+        <a href="/scrape">
+            <li>Scrape</li>
+        </a>
+        <a href="/saved-articles">
+            <li>Saved Articles</li>
+        </a>
+    </ul>
+</nav>
+<main id="savedArticles">
+    {{#each articles}}
+        <div class="card" id={{_id}}>
+            <a href={{link}}><div>
+                <img src={{link}}/>
+                <h3>{{title}}</h3>
+                <p>{{summary}}</p>
+                <div class="notes">
+                {{#each notes}}
+                    <h4>{{title}}</h4>
+                    <p>{{body}}</p>
+                {{/each}}
+                </div>
+            </div></a>
+        </div>
+    {{/each}}
+</main>

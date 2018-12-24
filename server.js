@@ -20,8 +20,8 @@ const exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
-require("./routes/api-routes");
-require("./routes/html-routes");
+require("./routes/api-routes")(app);
+require("./routes/html-routes")(app);
 
 app.listen(PORT, (error, response) => {
     if(error) throw error;

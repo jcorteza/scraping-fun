@@ -51,6 +51,10 @@ $("document").ready(() => {
         $.ajax({
             method: "DELETE",
             url: "/articles",
+            success: (response) => {
+                console.log(response.success);
+                location.reload();
+            },
             error: (err) => {
                 console.log(err.error);
             }

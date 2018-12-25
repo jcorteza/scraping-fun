@@ -50,9 +50,6 @@ const deleteNote = function(noteId) {
   $.ajax({
     method: "DELETE",
     url: "/articles",
-    success: (response) => {
-        console.log(response.success);
-    },
     error: (err) => {
         console.log(err.error);
     }

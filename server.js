@@ -4,7 +4,7 @@ let PORT = process.env.PORT || 3020;
 
 const mongoose = require("mongoose");
 let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/mongoHeadlines";
-mongoose.connect(MONGODB_URI, {useNewUrlParser: true})
+mongoose.connect(MONGODB_URI, {useNewUrlParser: true, useFindAndModify: false})
     .then(() => {
         console.log(`Initial connection to db was successful on db: ${MONGODB_URI}`);
     })

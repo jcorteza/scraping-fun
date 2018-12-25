@@ -1,26 +1,27 @@
-<div>
-    <img id="mainImg" alt="main layout image" src="/images/chris-barbalis-223158-unsplash.jpg"/>
-    <button id="btnScrape" type="button">Let's Scrape</button>
+<div class="col s12">
+    <img id="featured" class="responsive-img" alt="main layout image" src="/images/chris-barbalis-223158-unsplash.jpg"/>
+    <button id="btnScrape" class="waves-effect waves-light btn-large" type="button">Let's Scrape</button>
 </div>
-<nav>
-    <ul>
-        <a href="/">
-            <li>Home</li>
-        </a>
-        <a href="/scrape">
-            <li>Scrape</li>
-        </a>
-        <a href="/saved-articles">
-            <li>Saved Articles</li>
-        </a>
+<nav class="col s12">
+    <ul class="left">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/scrape">Scrape</a></li>
+        <li><a href="/saved-articles">Saved Articles</a></li>
     </ul>
 </nav>
-<main id="scrapedArticles">
+<main id="scrapedArticles" class="col s12">
     {{#each articles}}
-        <a href={{link}}><div class="card">
-            <img src={{link}}/>
-            <h3>{{title}}</h3>
-            <p>{{summary}}</p>
-        </div></a>
+        <div class="card" id={{id}}>
+            <a href={{link}} target="_blank"><div>
+                <picture>{{{image}}}</picture>
+                <h3>{{title}}</h3>
+                <p>{{summary}}</p>
+            </div></a>
+            {{#if saved}}
+                <a class="waves-effect waves-teal btn-flat saveBtn disabled">Saved</a>
+            {{else}}
+                <a class="waves-effect waves-teal btn-flat saveBtn">Save Article</a>
+            {{/if}}
+        </div>
     {{/each}}
 </main>

@@ -1,15 +1,17 @@
 $("document").ready(() => {
+  $(".collapsible").collapsible();
+  $(".modal").modal();
   // define funcion expression scrapeArticles for POST ajax call
   const scrapeArticle = () => {
     $.ajax({
         method: "POST",
         url: "/articles",
         success: (response) => {
-            console.log(`scrape was successful: ${JSON.stringify(response)}`);
+            console.log(response.success);
             location.reload();
         },
         error: (err) => {
-            console.log(JSON.stringify(err));
+            console.log(err.error);
         }
     });
   };
@@ -23,22 +25,32 @@ $("document").ready(() => {
             saved: saved
         },
         success: (response) => {
-            console.log(`article update was successful: ${JSON.stringify(response)}`);
+            console.log(response.success);
         },
         error: (err) => {
-            console.log(JSON.stringify(err));
+            console.log(err.error);
         }
       });
   };
 
+const deleteNote = function(noteId) {
+  $.ajax({
+    method: "DELETE",
+    url: `/notes/${noteId}`,
+    success: (response) => {
+        console.log(response.success);
+    },
+    error: (err) => {
+        console.log(err.error);
+    }
+  });
+};
+
   $.ajax({
     method: "GET",
     url: "/articles",
-    success: (response) => {
-        console.log(`Get articles was successful: ${JSON.stringify(response)}`);
-    },
     error: (err) => {
-        console.log(JSON.stringify(err));
+        console.log(err.error);
     }
   });
 
@@ -52,28 +64,59 @@ $("document").ready(() => {
       scrapeArticle();
   });
 
-  $(".saveBtn").on("click", () => {
+  //updated article saved status to true
+  $("a.saveBtn").on("click", function() {
+    let classes = $(this).attr("class");
+    let articleId = $(this).parent("div[class='card']").attr("id");
+    $(this).text("Saved");
+    $(this).attr("class", `${classes} disabled`);
     updateArticle(articleId, true);
   });
 
-  $(".unsaveBtn").on("click", () => {
+  //updates article saved status to false
+  $(".unsaveArticle").on("click", function() {
+      let articleId = $(this).parent("div.savedCard").attr("id");
+      $(`#${articleId}`).remove();
       updateArticle(articleId, false);
+      $(this)
+        .parent("div.savedCard")
+        .children("ul.collapsible")
+        .children("li")
+        .children("div.collapsible-body")
+        .children("div.noteCard")
+        .each(function() {
+            let noteId = $(this).attr("id");
+            deleteNote(noteId);
+        });
   });
 
-  $(".card").on("click", () => {
-    let id = $(this).attr("id");
-    $.ajax({
-      method: "GET",
-      url: `/articles/${id}`,
-      success: (response) => {
-        console.log(`Successfully got notes: ${JSON.stringify(response)}`);
+  //on click of .submitNote ajax used to post new note to db
+  $("#submitNote").on("click", function(event) {
+    event.preventDefault();
+    let title = $("#noteTitle").val().trim();
+    let body = $("#noteBody").val().trim();
+    let articleId = $(this).attr("data-articleId");
+    $.ajax({ 
+      method: "POST",
+      url: `/articles/${articleId}`,
+      data: {
+          title: title,
+          body: body
+      },
+      success: (article) => {
+        console.log(JSON.stringify(article));
+        location.reload();
       },
       error: (err) => {
-        console.log(JSON.stringify(err));
+        console.log(err.error);
       }
     });
   });
 
-
-
+  // on click of .deletenote ajax call is made to delete note from db based on id
+  $(".deleteNote").on("click", function() {
+    let noteId = $(this).parent().attr("id");
+    $(`#${noteId}`).remove();
+    deleteNote(noteId);
+  });
 });

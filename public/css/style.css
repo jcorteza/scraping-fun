@@ -1,0 +1,10 @@
+/*img#featured {
+    max-width: 100%;
+}*/
+
+@media screen and (max-width: 769px) {
+    main img {
+        width: 115px;
+        height: auto;
+    }
+}

@@ -46,6 +46,19 @@ const deleteNote = function(noteId) {
   });
 };
 
+  // deletes any unsaved articles
+  $.ajax({
+    method: "DELETE",
+    url: "/articles",
+    success: (response) => {
+        console.log(response.success);
+    },
+    error: (err) => {
+        console.log(err.error);
+    }
+  });
+
+  // pulls any remaining articles from the database
   $.ajax({
     method: "GET",
     url: "/articles",
